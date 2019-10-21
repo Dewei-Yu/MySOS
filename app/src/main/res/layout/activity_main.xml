@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -17,6 +17,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/home"
+            android:background="#fff"
             android:scaleType="centerInside"/>
 
         <ImageButton
@@ -25,6 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/contact"
+            android:background="#fff"
             android:scaleType="centerInside"/>
 
         <ImageButton
@@ -33,6 +35,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:src="@drawable/history"
+            android:background="#fff"
             android:scaleType="centerInside"/>
 
         <ImageButton
@@ -40,7 +43,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:src="@drawable/settings"
+            android:src="@drawable/setting"
+            android:background="#fff"
             android:scaleType="centerInside"/>
 
 
@@ -50,7 +54,7 @@
            android:id="@+id/main_frame_layout"
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="5">
+           android:layout_weight="7">
 
     </FrameLayout>
 
