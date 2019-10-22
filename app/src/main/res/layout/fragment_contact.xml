@@ -11,42 +11,45 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Person 1"
+        android:text="Person 1 (to be added)"
         android:textSize="14sp" />
 
     <TextView
-        android:id="@+id/person"
+        android:id="@+id/person2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="#d3d7d4"
         android:gravity="center"
-        android:text="Person 2" />
+        android:text="Person 2 (to be added)" />
 
     <TextView
+        android:id="@+id/person3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Person 3" />
+        android:text="Person 3 (to be added)" />
 
     <TextView
+        android:id="@+id/person4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:background="#d3d7d4"
         android:gravity="center"
-        android:text="Person 4" />
+        android:text="Person 4 (to be added)" />
 
     <TextView
+        android:id="@+id/person5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="Person 5" />
+        android:text="Person 5 (to be added)" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addEmergency"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"

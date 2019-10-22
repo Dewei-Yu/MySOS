@@ -26,6 +26,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import static android.widget.Toast.*;
 
 
@@ -53,20 +55,25 @@ public class ContactFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contact, container, false);
         super.onCreate(savedInstanceState);
-        TextView person = (TextView) rootView.findViewById(R.id.person1);
+        ArrayList<TextView> persons = new ArrayList<>();
+        persons.add((TextView) rootView.findViewById(R.id.person1));
+        persons.add((TextView) rootView.findViewById(R.id.person2));
+        persons.add((TextView) rootView.findViewById(R.id.person3));
+        persons.add((TextView) rootView.findViewById(R.id.person4));
+        persons.add((TextView) rootView.findViewById(R.id.person5));
+
         MySOSDB db = new MySOSDB(this.getActivity());
         Cursor allData = db.getAllData();
         if(allData.getCount() != 0){
-            StringBuffer buffer = new StringBuffer();
             int i=0;
-            while(i<1 && allData.moveToNext()){
-                person.setText("Name: " + allData.getString(0) + "\n"+ "Phone Number:" +allData.getString(1));
+            while(i<5 && allData.moveToNext()){
+                persons.get(i).setText("Name: " + allData.getString(0) + "\n"+ "Phone Number:" +allData.getString(1));
                 i++;
             }
-            System.out.println(buffer.toString());
         }
+        db.deleteRow(1);
 
-        Button submitButton = (Button) rootView.findViewById(R.id.button2);
+        Button submitButton = (Button) rootView.findViewById(R.id.addEmergency);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
