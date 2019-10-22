@@ -7,7 +7,7 @@
 
 
     <EditText
-        android:id="@+id/addName"
+        android:id="@+id/addUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -15,7 +15,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/addPhone"
+        android:id="@+id/addUserPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -23,7 +23,7 @@
         android:inputType="textPersonName" />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/submitUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Submit" />

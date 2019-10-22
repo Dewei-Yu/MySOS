@@ -100,6 +100,11 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.deleteRow(2);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(ContactFragment.this).attach(ContactFragment.this).commit();
             }
         });
         Button deleteButton3 = (Button) rootView.findViewById(R.id.delete3);
@@ -107,6 +112,11 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.deleteRow(3);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(ContactFragment.this).attach(ContactFragment.this).commit();
             }
         });
         Button deleteButton4 = (Button) rootView.findViewById(R.id.delete4);
@@ -114,6 +124,11 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.deleteRow(4);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(ContactFragment.this).attach(ContactFragment.this).commit();
             }
         });
         Button deleteButton5 = (Button) rootView.findViewById(R.id.delete5);
@@ -121,6 +136,11 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.deleteRow(5);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(ContactFragment.this).attach(ContactFragment.this).commit();
             }
         });
 

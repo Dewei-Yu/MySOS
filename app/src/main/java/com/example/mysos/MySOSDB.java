@@ -99,9 +99,29 @@ public class MySOSDB extends SQLiteOpenHelper {
         if(nthRow(n) != null)
             db.delete(TABLE_NAME,COLUMN_NAME + "=?",new String[]{nthRow(n)});
     }
+    public void deleteUser(int n){
+        SQLiteDatabase db = this.getWritableDatabase();
+        if(nthRow(n) != null)
+            db.delete(USER_DETAIL,COLUMN_NAME + "=?",new String[]{userRow(n)});
+    }
 
     public String nthRow(int n){
         Cursor allData = getAllData();
+        if(allData.getCount() != 0){
+            int i=0;
+            String nthRowString = null;
+            while(i<n && allData.moveToNext()){
+                nthRowString = allData.getString(0);
+                i++;
+            }
+            return nthRowString;
+        }else {
+            return null;
+        }
+    }
+
+    public String userRow(int n){
+        Cursor allData = getUserDetail();
         if(allData.getCount() != 0){
             int i=0;
             String nthRowString = null;
