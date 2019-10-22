@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -62,7 +63,7 @@ public class ContactFragment extends Fragment {
         persons.add((TextView) rootView.findViewById(R.id.person4));
         persons.add((TextView) rootView.findViewById(R.id.person5));
 
-        MySOSDB db = new MySOSDB(this.getActivity());
+        final MySOSDB db = new MySOSDB(this.getActivity());
         Cursor allData = db.getAllData();
         if(allData.getCount() != 0){
             int i=0;
@@ -71,7 +72,6 @@ public class ContactFragment extends Fragment {
                 i++;
             }
         }
-        db.deleteRow(1);
 
         Button submitButton = (Button) rootView.findViewById(R.id.addEmergency);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +81,50 @@ public class ContactFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        Button deleteButton1 = (Button) rootView.findViewById(R.id.delete1);
+        deleteButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deleteRow(1);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                if (Build.VERSION.SDK_INT >= 26) {
+                    ft.setReorderingAllowed(false);
+                }
+                ft.detach(ContactFragment.this).attach(ContactFragment.this).commit();
+            }
+        });
+
+        Button deleteButton2 = (Button) rootView.findViewById(R.id.delete2);
+        deleteButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deleteRow(2);
+            }
+        });
+        Button deleteButton3 = (Button) rootView.findViewById(R.id.delete3);
+        deleteButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deleteRow(3);
+            }
+        });
+        Button deleteButton4 = (Button) rootView.findViewById(R.id.delete4);
+        deleteButton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deleteRow(4);
+            }
+        });
+        Button deleteButton5 = (Button) rootView.findViewById(R.id.delete5);
+        deleteButton5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                db.deleteRow(5);
+            }
+        });
+
+
         // Inflate the layout for this fragment
         return rootView;
     }

@@ -15,18 +15,20 @@
         android:layout_weight="1">
 
         <TextView
+            android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="User Name:"
+            android:layout_marginTop="20dp"
             android:gravity="start"
-            android:layout_marginTop="20dp"/>
+            android:text="User Name:" />
 
         <TextView
+            android:id="@+id/userPhone"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:text="Telephone:"
+            android:layout_marginTop="10dp"
             android:gravity="start"
-            android:layout_marginTop="10dp"/>
+            android:text="Telephone:" />
 
     </LinearLayout>
 

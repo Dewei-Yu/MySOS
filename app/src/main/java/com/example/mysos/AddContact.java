@@ -1,15 +1,17 @@
 package com.example.mysos;
 
 
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +29,7 @@ import static android.widget.Toast.*;
 
 
 
-public class AddContact extends AppCompatActivity {
+public class AddContact extends FragmentActivity {
 
     SQLiteDatabase.CursorFactory factory;
     private static final int DATABASE_VERSION = 1;
@@ -63,8 +65,11 @@ public class AddContact extends AppCompatActivity {
                 }else{
                     showMessage("0");
                 }
+
             }
         });
+
+
     }
 
     private void showMessage(String message) {
@@ -81,5 +86,8 @@ public class AddContact extends AppCompatActivity {
 
 
 
-}
+
+
+
+    }
 

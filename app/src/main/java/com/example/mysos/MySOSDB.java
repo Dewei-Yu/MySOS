@@ -81,6 +81,12 @@ public class MySOSDB extends SQLiteOpenHelper {
         return res;
     }
 
+    public Cursor getUserDetail(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from "+USER_DETAIL, null);
+        return res;
+    }
+
     public long getNumOfRows(String tableName) {
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, tableName);
