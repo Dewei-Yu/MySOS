@@ -62,6 +62,7 @@ public class ContactFragment extends Fragment {
                 boolean isInserted = db.insertData(nameInput,phoneInput);
                 if (isInserted){
                     showMessage("1");
+                    System.out.println("!!!!");
                 }else{
                     showMessage("0");
                 }
