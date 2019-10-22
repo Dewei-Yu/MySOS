@@ -2,6 +2,7 @@ package com.example.mysos;
 
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -49,42 +50,17 @@ public class ContactFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_contact, container, false);
         super.onCreate(savedInstanceState);
-        final MySOSDB db = new MySOSDB(this.getActivity());
-        final EditText editName = (EditText) rootView.findViewById(R.id.name1);
-        final EditText editPhone = (EditText) rootView.findViewById(R.id.phone1);
-        Button submitButton = (Button) rootView.findViewById(R.id.submitButton);
+        Button submitButton = (Button) rootView.findViewById(R.id.button2);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String nameInput = editName.getText().toString();
-                String phoneInput = editPhone.getText().toString();
-                boolean isInserted = db.insertData(nameInput,phoneInput);
-                if (isInserted){
-                    showMessage("1");
-                    System.out.println("!!!!");
-                }else{
-                    showMessage("0");
-                }
+                Intent intent = new Intent(getActivity(),AddContact.class);
+                startActivity(intent);
             }
         });
         // Inflate the layout for this fragment
         return rootView;
     }
-
-    private void showMessage(String message) {
-
-        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-
-    }
-
-    private void saveToDB() {
-        MySOSDB database = new MySOSDB(getActivity());
-
-
-    }
-
-
 
 }
 
