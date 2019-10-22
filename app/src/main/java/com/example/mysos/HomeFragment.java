@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,10 +70,14 @@ public class HomeFragment extends Fragment {
                         Toast.makeText(getContext(), "Please repress and permit GPS access", Toast.LENGTH_LONG).show();
                     }else{
 
-                        SmsManager sms = SmsManager.getDefault();
-                        PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, new Intent(), 0);
-                        sms.sendTextMessage("0481978609", null, "This is a test message", pi,null);
-
+                        MySOSDB mySOSDB = new MySOSDB(getActivity());
+                        ArrayList<String> contactList = mySOSDB.getAllContactNumbers();
+                        String myName = mySOSDB.getUserName();
+                        for (String number : contactList){
+                            SmsManager sms = SmsManager.getDefault();
+                            PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, new Intent(), 0);
+                            sms.sendTextMessage(number, null, "This is a emergency message sent from " + myName, pi,null);
+                        }
                         Toast.makeText(getContext(), location, Toast.LENGTH_LONG).show();
                     }
 
@@ -86,16 +91,26 @@ public class HomeFragment extends Fragment {
     }
 
     private void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        String[] permissions = new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.READ_PHONE_STATE
+        };
+        ArrayList<String> ungetPermissions = new ArrayList<>();
+
+        for (String permission : permissions){
+            if (ContextCompat.checkSelfPermission(getContext(), permission)
+                    != PackageManager.PERMISSION_GRANTED){
+                ungetPermissions.add(permission);
+            }
         }
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{
-                    Manifest.permission.SEND_SMS}, 1);
+
+        if (ungetPermissions.size()>0){
+            String[] ungetPer =ungetPermissions.toArray(new String[ungetPermissions.size()]);
+            ActivityCompat.requestPermissions(getActivity(), ungetPer, 1);
         }
+
+
     }
 
     private String getLocation(){

@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 public class MySOSDB extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "contact";
@@ -133,6 +136,27 @@ public class MySOSDB extends SQLiteOpenHelper {
         }else {
             return null;
         }
+    }
+
+    public ArrayList<String> getAllContactNumbers(){
+        ArrayList<String> allPhoneNumbers = new ArrayList<>();
+        Cursor allData = getAllData();
+        while(allData.moveToNext()){
+            allPhoneNumbers.add( allData.getString(1));
+        }
+        return  allPhoneNumbers;
+    }
+
+    public String getUserName(){
+        Cursor userName = getUserDetail();
+        int i =0;
+        String name = null;
+        while(i<1&&userName.moveToNext()){
+            name = userName.getString(0);
+            i++;
+        }
+        return name;
+
     }
 
 }
