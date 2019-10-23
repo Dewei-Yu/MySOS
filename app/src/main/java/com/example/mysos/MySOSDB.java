@@ -81,7 +81,6 @@ public class MySOSDB extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(COLUMN_NAME, name);
             values.put(COLUMN_PHONE, phone);
-            System.out.println("!!!!!!!!!!!!!!!!!!!");
             long result = db.insert(CONTACT_TABLE, null, values);
             if (result == -1) {
                 return false;

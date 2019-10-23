@@ -43,21 +43,22 @@ public class ContactFragment extends Fragment {
         currentDB = db;
         updateContact(db,rootView);
 
-        ImageButton addContact = (ImageButton) rootView.findViewById(R.id.addEmergency);
-        addContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),AddContact.class);
-                startActivity(intent);
-            }
-        });
+//        ImageButton addContact = (ImageButton) rootView.findViewById(R.id.addEmergency);
+//        addContact.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(),AddContact.class);
+//                startActivity(intent);
+//            }
+//        });
 
         ImageButton deleteButton1 = (ImageButton) rootView.findViewById(R.id.delete1);
         deleteButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 db.deleteRow(1);
-                updateContactFragment();
+                Intent intent = new Intent(getActivity(),AddContact.class);
+                startActivity(intent);
             }
         });
 
@@ -66,7 +67,8 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.deleteRow(2);
-                updateContactFragment();
+                Intent intent = new Intent(getActivity(),AddContact.class);
+                startActivity(intent);
             }
         });
         ImageButton deleteButton3 = (ImageButton) rootView.findViewById(R.id.delete3);
@@ -74,7 +76,8 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.deleteRow(3);
-                updateContactFragment();
+                Intent intent = new Intent(getActivity(),AddContact.class);
+                startActivity(intent);
             }
         });
         ImageButton deleteButton4 = (ImageButton) rootView.findViewById(R.id.delete4);
@@ -82,7 +85,8 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.deleteRow(4);
-                updateContactFragment();
+                Intent intent = new Intent(getActivity(),AddContact.class);
+                startActivity(intent);
             }
         });
         ImageButton deleteButton5 = (ImageButton) rootView.findViewById(R.id.delete5);
@@ -90,7 +94,8 @@ public class ContactFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 db.deleteRow(5);
-              updateContactFragment();
+                Intent intent = new Intent(getActivity(),AddContact.class);
+                startActivity(intent);
             }
         });
         return rootView;

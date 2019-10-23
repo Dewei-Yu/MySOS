@@ -2,28 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
     android:orientation="vertical">
-=======
-    >
 
-        <Button
-            android:id="@+id/testButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="testButton"/>
-        <VideoView
-            android:id="@+id/testVideoView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
->>>>>>> 18a129e5006ebe23bd5b080e8cb1495766be232d
-
-        <!-- TODO: Update blank fragment layout -->
-        <ListView
-            android:id="@+id/test777"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
 
 </LinearLayout>
