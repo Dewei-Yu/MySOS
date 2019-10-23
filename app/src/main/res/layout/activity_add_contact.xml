@@ -58,7 +58,7 @@
             android:ems="10"
             android:hint="Please Enter Phone Number"
             android:inputType="textPersonName"
-            android:theme="@style/EditText"/>
+            android:theme="@style/EditText" />
 
         <Button
             android:id="@+id/submitUser"

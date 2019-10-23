@@ -104,11 +104,11 @@ public class ContactFragment extends Fragment {
         persons.add((TextView) rootView.findViewById(R.id.person4));
         persons.add((TextView) rootView.findViewById(R.id.person5));
 
-        Cursor allData = db.getAllData();
+        Cursor allData = db.getAllContact();
         if(allData.getCount() != 0){
             int i=0;
             while(i<5 && allData.moveToNext()){
-                persons.get(i).setText("Name: " + allData.getString(0) + "\n"+ "Phone Number:" +allData.getString(1));
+                persons.get(i).setText("Name: " + allData.getString(0) + "\n"+ "Phone Number: " +allData.getString(1));
                 i++;
             }
         }
