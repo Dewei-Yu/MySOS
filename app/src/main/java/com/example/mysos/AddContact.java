@@ -36,10 +36,9 @@ public class AddContact extends FragmentActivity {
                 String phoneInput = editPhone.getText().toString();
                 boolean isInserted = db.insertData(nameInput,phoneInput);
                 if (isInserted){
-                    showMessage("1");
-                    System.out.println("!!!!");
+                    showMessage("Insertion is successful!");
                 }else{
-                    showMessage("0");
+                    showMessage("Fails!");
                 }
 
             }

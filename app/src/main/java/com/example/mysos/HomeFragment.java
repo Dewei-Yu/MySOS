@@ -65,22 +65,22 @@ public class HomeFragment extends Fragment {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.sosButton:
-                    String location = getLocation();
+                    final String location = getLocation();
                     if ( location.equals("Permission denied")){
                         Toast.makeText(getContext(), "Please repress and permit GPS access", Toast.LENGTH_LONG).show();
                     }else{
-
+                        checkPermissions();
                         MySOSDB mySOSDB = new MySOSDB(getActivity());
                         ArrayList<String> contactList = mySOSDB.getAllContactNumbers();
                         String myName = mySOSDB.getUserName();
                         for (String number : contactList){
                             SmsManager sms = SmsManager.getDefault();
                             PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, new Intent(), 0);
-                            sms.sendTextMessage(number, null, "This is a emergency message sent from " + myName, pi,null);
+                            String msm = "Emergency, "+ myName + " is at "+ location;
+                            sms.sendTextMessage(number, null, msm  , pi,null);
                         }
-                        Toast.makeText(getContext(), location, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Messages are sent!", Toast.LENGTH_LONG).show();
                     }
-
                     break;
                 case R.id.videoRecordButton:
                     Toast.makeText(getActivity(), "Click vidoe button", Toast.LENGTH_LONG).show();
