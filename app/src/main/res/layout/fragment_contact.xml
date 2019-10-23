@@ -37,8 +37,8 @@
             android:src="@drawable/delete"
             android:background="#00000000"
             android:scaleType="centerInside"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"/>
 
@@ -48,14 +48,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#FFFAFA">
 
         <TextView
             android:id="@+id/person2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#d3d7d4"
             android:gravity="center"
             android:text="Person 2 (to be added)" />
 
@@ -75,8 +75,8 @@
             android:src="@drawable/delete"
             android:background="#00000000"
             android:scaleType="centerInside"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"/>
 
@@ -113,8 +113,8 @@
             android:src="@drawable/delete"
             android:background="#00000000"
             android:scaleType="centerInside"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"/>
 
@@ -124,14 +124,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#FFFAFA">
 
         <TextView
             android:id="@+id/person4"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#d3d7d4"
             android:gravity="center"
             android:text="Person 4 (to be added)" />
 
@@ -151,8 +151,8 @@
             android:src="@drawable/delete"
             android:background="#00000000"
             android:scaleType="centerInside"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"/>
 
@@ -188,8 +188,8 @@
             android:src="@drawable/delete"
             android:background="#00000000"
             android:scaleType="centerInside"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"/>
 
@@ -199,7 +199,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="#FFFAFA">
 
         <!--<Button-->
             <!--android:id="@+id/addEmergency"-->
@@ -218,8 +219,8 @@
             android:background="#00000000"
             android:scaleType="centerInside"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="40dp" />
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" />
 
         <TextView
             android:layout_width="match_parent"

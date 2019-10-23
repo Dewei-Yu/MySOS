@@ -5,28 +5,73 @@
     android:layout_height="match_parent"
     >
 
-
-    <EditText
-        android:id="@+id/addUserName"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Please Enter Your Name"
-        android:inputType="textPersonName" />
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:background="#F4F4F4">
 
-    <EditText
-        android:id="@+id/addUserPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Please Enter Phone Number"
-        android:inputType="textPersonName" />
+        <!--<ImageButton-->
+        <!--android:layout_marginTop="5dp"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="8"-->
+        <!--android:src="@drawable/back"-->
+        <!--android:background="#00000000"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:layout_marginLeft="10dp"/>-->
 
-    <Button
-        android:id="@+id/submitUser"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Add Contact"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit" />
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="10">
+
+
+        <EditText
+            android:id="@+id/addUserName"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:ems="10"
+            android:hint="Please Enter Your Name"
+            android:inputType="textPersonName"
+            android:layout_marginTop="20dp"
+            android:theme="@style/EditText"/>
+
+        <EditText
+            android:id="@+id/addUserPhone"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:ems="10"
+            android:hint="Please Enter Phone Number"
+            android:inputType="textPersonName"
+            android:theme="@style/EditText"/>
+
+        <Button
+            android:id="@+id/submitUser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:background="@drawable/submit_border"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"/>
+
+    </LinearLayout>
+
 
 
 </LinearLayout>
