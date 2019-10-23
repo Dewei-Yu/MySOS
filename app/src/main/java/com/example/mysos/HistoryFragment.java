@@ -49,7 +49,6 @@ public class HistoryFragment extends Fragment {
             }
         }
         String[] newHistory = history.toArray(new String[history.size()]);
-        System.out.println(newHistory[0]);
         if(history.size()!=0) {
             ArrayAdapter adapter = new ArrayAdapter<String>(currentView.getContext(), android.R.layout.simple_list_item_1, newHistory);
             ListView listView = (ListView) currentView.findViewById(R.id.history);

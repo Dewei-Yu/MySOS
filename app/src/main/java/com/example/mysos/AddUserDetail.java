@@ -23,12 +23,12 @@ public class AddUserDetail extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteUser(1);
                 String nameInput = editName.getText().toString();
                 String phoneInput = editPhone.getText().toString();
                 boolean isInserted;
                 if(isValidPhone(phoneInput)) {
-                    isInserted = db.insertData(nameInput, phoneInput);
+                    db.deleteUser(1);
+                    isInserted = db.insertUser(nameInput, phoneInput);
                     if (isInserted){
                         showMessage("Insertion is successful!");
                     }else{
