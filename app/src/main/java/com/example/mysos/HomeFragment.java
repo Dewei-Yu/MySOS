@@ -151,15 +151,12 @@ public class HomeFragment extends Fragment {
         if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
         }
-        System.out.println(111111);
-        onActivityResult(REQUEST_VIDEO_CAPTURE, RESULT_OK, takeVideoIntent);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData();
-            System.out.println(222222222);
             VideoView videoView = (VideoView) fragmentView.findViewById(R.id.videoView);
             videoView.setVideoURI(videoUri);
         }

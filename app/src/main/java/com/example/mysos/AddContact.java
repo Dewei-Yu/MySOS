@@ -1,9 +1,12 @@
 package com.example.mysos;
 
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.View;
 import android.widget.EditText;
@@ -25,9 +28,9 @@ public class AddContact extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact);
         final MySOSDB db = new MySOSDB(this);
-        final EditText editName = (EditText) findViewById(R.id.addUserName);
-        final EditText editPhone = (EditText) findViewById(R.id.addUserPhone);
-        Button submitButton = (Button) findViewById(R.id.submitUser);
+        final EditText editName =  findViewById(R.id.addUserName);
+        final EditText editPhone =  findViewById(R.id.addUserPhone);
+        Button submitButton = findViewById(R.id.submitUser);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,10 +43,9 @@ public class AddContact extends FragmentActivity {
                 }else{
                     showMessage("Fails!");
                 }
-
+                onBackPressed();
             }
         });
-
 
     }
 
@@ -53,16 +55,5 @@ public class AddContact extends FragmentActivity {
 
     }
 
-    private void saveToDB() {
-        MySOSDB database = new MySOSDB(this);
-
-
-    }
-
-
-
-
-
-
-    }
+}
 

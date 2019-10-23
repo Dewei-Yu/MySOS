@@ -14,9 +14,9 @@ public class AddUserDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user_detail);
         final MySOSDB db = new MySOSDB(this);
-        final EditText editName = (EditText) findViewById(R.id.addUserName);
-        final EditText editPhone = (EditText) findViewById(R.id.addUserPhone);
-        Button submitButton = (Button) findViewById(R.id.submitUser);
+        final EditText editName =  findViewById(R.id.addUserName);
+        final EditText editPhone =  findViewById(R.id.addUserPhone);
+        Button submitButton = findViewById(R.id.submitUser);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -25,21 +25,17 @@ public class AddUserDetail extends AppCompatActivity {
                 String phoneInput = editPhone.getText().toString();
                 boolean isInserted = db.insertUser(nameInput,phoneInput);
                 if (isInserted){
-                    showMessage("1");
-                    System.out.println("!!!!");
+                    showMessage("User detail is updated!");
                 }else{
-                    showMessage("0");
+                    showMessage("Update fails");
                 }
-
+                onBackPressed();
             }
         });
-
 
     }
 
     private void showMessage(String message) {
-
         Toast.makeText(AddUserDetail.this, message, Toast.LENGTH_SHORT).show();
-
     }
 }
