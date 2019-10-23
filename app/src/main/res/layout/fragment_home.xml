@@ -6,21 +6,26 @@
 
     <ImageButton
         android:id="@+id/sosButton"
-        android:layout_width="200dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="20dp"
-        android:src="@drawable/sos_button"
+        android:layout_width="265dp"
+        android:layout_height="211dp"
         android:layout_gravity="center"
-        android:scaleType="centerInside"/>
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="20dp"
+        android:background="#00000000"
+        android:scaleType="centerInside"
+        android:src="@drawable/sos" />
 
     <Button
         android:id="@+id/videoRecordButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_width="171dp"
+        android:layout_height="84dp"
         android:layout_gravity="center"
-        android:background="@android:color/holo_green_light"
-        android:text="Record Video" />
+        android:background="@drawable/border"
+        android:text="Record Video"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:textStyle="normal" />
     
 
 </LinearLayout>
