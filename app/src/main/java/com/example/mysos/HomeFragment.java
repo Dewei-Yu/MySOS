@@ -88,24 +88,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private String getFileDirectory(){
-        return (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MySOS/");
-    }
-
-    private String getPath(String nameOfFile) {
-
-        String sdStatus = Environment.getExternalStorageState();
-//        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
-//            return;
-//        }
-        FileOutputStream b = null;
-        File file = new File(getFileDirectory());
-        file.mkdirs();
-        String pathName = getFileDirectory() + nameOfFile;
-        return pathName;
-
-    }
-
 
     private class ButtonListener implements View.OnClickListener {
         @Override
@@ -113,48 +95,14 @@ public class HomeFragment extends Fragment {
             switch (view.getId()) {
                 case R.id.sosButton:
 
-                    System.out.println("getFilesDIr is " + Environment.getExternalStorageDirectory().getAbsolutePath());
-
-
-                    String pathSave = getPath(System.currentTimeMillis()+ "audio.3gp");
-
-                    mediaRecorder = new MediaRecorder();
-
-
-//                    String pathSave = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + UUID.randomUUID().toString() + "_audio_record.3gp";
-                    mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-                    mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-                    mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-                    mediaRecorder.setOutputFile(pathSave);
-                    try {
-                        mediaRecorder.prepare();
-                        System.out.println("strat reccording, Path is " + pathSave);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    mediaRecorder.start();
-
-                    Toast.makeText(getActivity(), "recording", Toast.LENGTH_LONG).show();
-
-                    try {
-                        TimeUnit.SECONDS.sleep(10);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    //stop
-                    mediaRecorder.stop();
-                    System.out.println("stop recording");
-
-
-//                    sendSMS();
+                    sendSMS();
+                    Toast.makeText(getActivity(), "Message sent! 20 seconds audio recording starts!", Toast.LENGTH_LONG).show();
+                    recordAudio();
 
                     break;
                 case R.id.videoRecordButton:
 
-
-//                    dispatchTakeVideoIntent();
+                    dispatchTakeVideoIntent();
 
                     Toast.makeText(getActivity(), "Click vidoe button", Toast.LENGTH_LONG).show();
                     break;
@@ -263,4 +211,54 @@ public class HomeFragment extends Fragment {
         }
 
     }
+
+    private String getFileDirectory(){
+        return (Environment.getExternalStorageDirectory().getAbsolutePath() + "/MySOS/");
+    }
+
+    private String getPath(String nameOfFile) {
+
+//        String sdStatus = Environment.getExternalStorageState();
+//        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
+//            return;
+//        }
+        FileOutputStream b = null;
+        File file = new File(getFileDirectory());
+        file.mkdirs();
+        String pathName = getFileDirectory() + nameOfFile;
+        return pathName;
+
+    }
+
+    private void recordAudio(){
+        String pathSave = getPath(System.currentTimeMillis()+ "audio.3gp");
+
+        mediaRecorder = new MediaRecorder();
+
+
+//                    String pathSave = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + UUID.randomUUID().toString() + "_audio_record.3gp";
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        mediaRecorder.setOutputFile(pathSave);
+        try {
+            mediaRecorder.prepare();
+            System.out.println("strat reccording, Path is " + pathSave);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        mediaRecorder.start();
+
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        //stop
+        mediaRecorder.stop();
+
+    }
+
 }
