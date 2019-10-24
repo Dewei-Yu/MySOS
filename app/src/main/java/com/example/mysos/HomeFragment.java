@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment {
     MediaRecorder mediaRecorder = null;
 
     private StorageReference mStorageRef;
+    private StorageReference audioStorageRef;
     private String link =null;
     private String pathSave = null;
 
@@ -95,6 +96,7 @@ public class HomeFragment extends Fragment {
         sosButton.setOnClickListener(new ButtonListener());
         videoRecordButton.setOnClickListener(new ButtonListener());
         mStorageRef = FirebaseStorage.getInstance().getReference("Videos");
+        audioStorageRef = FirebaseStorage.getInstance().getReference("Audios");
         checkPermissions();
 
         // Inflate the layout for this fragment
@@ -111,6 +113,11 @@ public class HomeFragment extends Fragment {
                     sendSMS("sent!");
                     Toast.makeText(getActivity(), "Message sent! 20 seconds audio recording starts!", Toast.LENGTH_LONG).show();
                     recordAudio();
+
+                    File audiofile = new File(pathSave);
+                    Uri audioUri = Uri.fromFile(audiofile);
+                    UploadAudio(audioUri);
+
                     break;
                 case R.id.videoRecordButton:
 
@@ -121,6 +128,34 @@ public class HomeFragment extends Fragment {
 
         }
     }
+
+    private void UploadAudio(Uri audioUri) {
+        // given file a name
+        System.out.println("2222222222222222222222222");
+        StorageReference Ref = audioStorageRef.child(System.currentTimeMillis() + "." + getExtension(audioUri));
+
+        Ref.putFile(audioUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getActivity(), "Video Uploaded Successfully!", Toast.LENGTH_LONG).show();
+                        // Get a URL to the uploaded content
+                        Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!urlTask.isSuccessful());
+                        Uri downloadUrl = urlTask.getResult();
+                        link = downloadUrl.toString();
+                        sendSMS(link);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                });
+    }
+
 
 
     private void checkPermissions() {
