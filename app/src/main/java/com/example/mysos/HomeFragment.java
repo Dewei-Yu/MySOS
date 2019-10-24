@@ -4,30 +4,20 @@ package com.example.mysos;
 import android.Manifest;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.location.LocationProvider;
-import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,31 +25,18 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
-import android.widget.VideoView;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
-import java.util.Timer;
-import java.util.concurrent.TimeUnit;
-
-import java.time.*;
-
-
 import static android.app.Activity.RESULT_OK;
 
 
@@ -70,17 +47,13 @@ public class HomeFragment extends Fragment {
 
     static final int REQUEST_VIDEO_CAPTURE = 1;
     static View fragmentView = null;
-
     MediaRecorder mediaRecorder = null;
-
     private StorageReference mStorageRef;
     private StorageReference audioStorageRef;
     private String link =null;
     private String pathSave = null;
 
-
     public HomeFragment() {
-        // Required empty public constructor
     }
 
 
@@ -89,17 +62,13 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         fragmentView = view;
-        ImageButton sosButton = (ImageButton) view.findViewById(R.id.sosButton);
-        Button videoRecordButton = (Button) view.findViewById(R.id.videoRecordButton);
-
-
+        ImageButton sosButton =  view.findViewById(R.id.sosButton);
+        Button videoRecordButton =  view.findViewById(R.id.videoRecordButton);
         sosButton.setOnClickListener(new ButtonListener());
         videoRecordButton.setOnClickListener(new ButtonListener());
         mStorageRef = FirebaseStorage.getInstance().getReference("Videos");
         audioStorageRef = FirebaseStorage.getInstance().getReference("Audios");
         checkPermissions();
-
-        // Inflate the layout for this fragment
         return view;
 
     }
@@ -110,53 +79,19 @@ public class HomeFragment extends Fragment {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.sosButton:
-                    sendSMS("sent!");
-                    Toast.makeText(getActivity(), "Message sent! 20 seconds audio recording starts!", Toast.LENGTH_LONG).show();
+                    sendSMS("", "message");
                     recordAudio();
-
                     File audiofile = new File(pathSave);
                     Uri audioUri = Uri.fromFile(audiofile);
                     UploadAudio(audioUri);
-
                     break;
                 case R.id.videoRecordButton:
-
                     dispatchTakeVideoIntent();
                     Toast.makeText(getActivity(), "Click vidoe button", Toast.LENGTH_LONG).show();
                     break;
             }
-
         }
     }
-
-    private void UploadAudio(Uri audioUri) {
-        // given file a name
-        System.out.println("2222222222222222222222222");
-        StorageReference Ref = audioStorageRef.child(System.currentTimeMillis() + "." + getExtension(audioUri));
-
-        Ref.putFile(audioUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        Toast.makeText(getActivity(), "Video Uploaded Successfully!", Toast.LENGTH_LONG).show();
-                        // Get a URL to the uploaded content
-                        Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!urlTask.isSuccessful());
-                        Uri downloadUrl = urlTask.getResult();
-                        link = downloadUrl.toString();
-                        sendSMS(link);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        // ...
-                    }
-                });
-    }
-
-
 
     private void checkPermissions() {
         String[] permissions = new String[]{
@@ -165,7 +100,6 @@ public class HomeFragment extends Fragment {
                 Manifest.permission.READ_PHONE_STATE,
                 Manifest.permission.RECORD_AUDIO,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
-
         };
         ArrayList<String> ungetPermissions = new ArrayList<>();
 
@@ -180,8 +114,6 @@ public class HomeFragment extends Fragment {
             String[] ungetPer = ungetPermissions.toArray(new String[ungetPermissions.size()]);
             ActivityCompat.requestPermissions(getActivity(), ungetPer, 1);
         }
-
-
     }
 
     private String getLocation() {
@@ -195,31 +127,90 @@ public class HomeFragment extends Fragment {
             Location location = gpsUtils.getLocation();
             Double longitude = location.getLongitude();
             Double latitude = location.getLatitude();
-
-            String result = "Longitude: " + String.format("%.2f", longitude) + " Latitude: " + String.format("%.2f", latitude);
+            String result = "Longitude is: " + String.format("%.2f", longitude) + " Latitude is: " + String.format("%.2f", latitude);
             return result;
+        }
+    }
+
+    private String getLocationURI() {
+        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return "Permission denied";
+        } else {
+            GPSUtils gpsUtils = GPSUtils.getInstance(getContext());
+            Location location = gpsUtils.getLocation();
+            Double longitude = location.getLongitude();
+            Double latitude = location.getLatitude();
+            String locationURL = "http://www.google.com/maps/place/"+ latitude+","+ longitude;
+            return locationURL;
         }
 
     }
 
-    private void sendSMS(String msm) {
-        String location = getLocation();
-        if (location.equals("Permission denied")) {
-            Toast.makeText(getContext(), "Please repress and permit GPS access", Toast.LENGTH_LONG).show();
-        } else {
-            checkPermissions();
-            MySOSDB mySOSDB = new MySOSDB(getActivity());
-            ArrayList<String> contactList = mySOSDB.getAllContactNumbers();
-            String myName = mySOSDB.getUserName();
-            for (String number : contactList) {
-                SmsManager sms = SmsManager.getDefault();
-                PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, new Intent(), 0);
-//                String msm = "Emergency, " + myName + " is at " + location;
-                sms.sendTextMessage(number, null, msm, pi, null);
+
+
+    private void sendSMS(String sms, String type) {
+        MySOSDB mySOSDB = new MySOSDB(getActivity());
+        ArrayList<String> contactList = mySOSDB.getAllContactNumbers();
+        if(type.equals("audio")) {
+            String location = getLocation();
+            if (location.equals("Permission denied")) {
+                Toast.makeText(getContext(), "Please repress and permit GPS access", Toast.LENGTH_LONG).show();
+            } else {
+                checkPermissions();
+                for (String number : contactList) {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, new Intent(), 0);
+                    smsManager.sendTextMessage(number, null, "Click the audio below, please help!", pi, null);
+                    smsManager.sendTextMessage(number, null, sms, pi, null);
+                }
+                Toast.makeText(getContext(), "An audio has been sent!", Toast.LENGTH_LONG).show();
             }
-            MySOSDB historyDB = new MySOSDB(this.getActivity());
-            updateHistory(historyDB);
-            Toast.makeText(getContext(), "Messages are sent!", Toast.LENGTH_LONG).show();
+        }else if(type.equals("video")){
+            String location = getLocation();
+            if (location.equals("Permission denied")) {
+                Toast.makeText(getContext(), "Please repress and permit GPS access", Toast.LENGTH_LONG).show();
+            } else {
+                checkPermissions();
+                for (String number : contactList) {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, new Intent(), 0);
+                    smsManager.sendTextMessage(number, null, "Click the video below, please help!", pi, null);
+                    smsManager.sendTextMessage(number, null, sms, pi, null);
+                }
+                Toast.makeText(getContext(), "A video has been sent!", Toast.LENGTH_LONG).show();
+            }
+        }else{
+            String location = getLocation();
+            if (location.equals("Permission denied")) {
+                Toast.makeText(getContext(), "Please repress and permit GPS access", Toast.LENGTH_LONG).show();
+            } else {
+                checkPermissions();
+                String myName = mySOSDB.getUserName();
+                for (String number : contactList) {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, new Intent(), 0);
+                    String message = myName + " has an emergency situation, location link is at below. Help!!!";
+                    smsManager.sendTextMessage(number, null,message, pi, null);
+                    smsManager.sendTextMessage(number, null,getLocationURI(), pi, null);
+                }
+                Toast.makeText(getContext(), "A message has been sent!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Message sent! 10 seconds audio recording starts!", Toast.LENGTH_LONG).show();
+
+
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+                MySOSDB historyDB = new MySOSDB(this.getActivity());
+                updateHistory(historyDB);
+
+            }
         }
     }
 
@@ -235,13 +226,7 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData(); //wait for send
-
             UploadVideo(videoUri);
-
-            //display the video recorded
-//            VideoView videoView = (VideoView) fragmentView.findViewById(R.id.videoView);
-//            videoView.setVideoURI(videoUri);
-//            videoView.start();
         }
     }
 
@@ -258,7 +243,6 @@ public class HomeFragment extends Fragment {
                 db.insertHistory(record);
             }
         }
-
     }
 
     private String getFileDirectory(){
@@ -266,11 +250,6 @@ public class HomeFragment extends Fragment {
     }
 
     private String getPath(String nameOfFile) {
-
-//        String sdStatus = Environment.getExternalStorageState();
-//        if (!sdStatus.equals(Environment.MEDIA_MOUNTED)) {
-//            return;
-//        }
         FileOutputStream b = null;
         File file = new File(getFileDirectory());
         file.mkdirs();
@@ -281,41 +260,52 @@ public class HomeFragment extends Fragment {
 
     private void recordAudio(){
         pathSave = getPath(System.currentTimeMillis()+ "audio.3gp");
-
         mediaRecorder = new MediaRecorder();
-
-
-//                    String pathSave = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + UUID.randomUUID().toString() + "_audio_record.3gp";
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
         mediaRecorder.setOutputFile(pathSave);
         try {
             mediaRecorder.prepare();
-            System.out.println("strat reccording, Path is " + pathSave);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         mediaRecorder.start();
-
         try {
             TimeUnit.SECONDS.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         //stop
         mediaRecorder.stop();
-
     }
 
+    private void UploadAudio(Uri audioUri) {
+        // given file a name
+        StorageReference Ref = audioStorageRef.child(System.currentTimeMillis() + "." + getExtension(audioUri));
+        Ref.putFile(audioUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Get a URL to the uploaded content
+                        Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!urlTask.isSuccessful());
+                        Uri downloadUrl = urlTask.getResult();
+                        link = downloadUrl.toString();
+                        sendSMS(link, "audio");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                    }
+                });
+    }
 
     private void UploadVideo(Uri videoUri) {
         // given file a name
-        System.out.println("1111111111111111111111111");
         StorageReference Ref = mStorageRef.child(System.currentTimeMillis() + "." + getExtension(videoUri));
-
         Ref.putFile(videoUri)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -326,15 +316,12 @@ public class HomeFragment extends Fragment {
                         while (!urlTask.isSuccessful());
                         Uri downloadUrl = urlTask.getResult();
                         link = downloadUrl.toString();
-
-                        sendSMS(link);
+                        sendSMS(link, "video");
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        // Handle unsuccessful uploads
-                        // ...
                     }
                 });
     }

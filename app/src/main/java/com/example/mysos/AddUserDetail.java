@@ -44,12 +44,9 @@ public class AddUserDetail extends AppCompatActivity {
     }
 
     private boolean isValidPhone(String phone){
-
-
         Pattern p = Pattern.compile("[0-9]{10}");
         Matcher m = p.matcher(phone);
         return (m.find() && m.group().equals(phone));
-
     }
 
     private void showMessage(String message) {

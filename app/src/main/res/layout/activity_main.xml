@@ -70,11 +70,6 @@
             android:background="#00000000"
             android:scaleType="centerInside"/>
 
-        <Button
-            android:id="@+id/testButtonMain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="test"/>
 
 
     </LinearLayout>

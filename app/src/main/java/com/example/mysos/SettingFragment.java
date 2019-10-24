@@ -25,7 +25,6 @@ public class SettingFragment extends Fragment {
     private MySOSDB currentDB;
 
     public SettingFragment() {
-        // Required empty public constructor
     }
 
     @SuppressLint("SetTextI18n")
@@ -43,7 +42,6 @@ public class SettingFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                db.deleteUser(1);
                 Intent intent = new Intent(getActivity(),AddUserDetail.class);
                 startActivity(intent);
 
@@ -55,8 +53,8 @@ public class SettingFragment extends Fragment {
     }
 
     private void updateUser(MySOSDB db, View rootView){
-        final TextView userNameInput = (TextView) rootView.findViewById(R.id.userName);
-        final TextView userPhoneInput = (TextView) rootView.findViewById(R.id.userPhone);
+        final TextView userNameInput =  rootView.findViewById(R.id.userName);
+        final TextView userPhoneInput = rootView.findViewById(R.id.userPhone);
         Cursor allData = db.getUserDetail();
         if(allData.getCount() != 0){
             int i=0;

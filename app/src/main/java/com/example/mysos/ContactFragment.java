@@ -3,21 +3,13 @@ package com.example.mysos;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
-import android.media.Image;
-import android.os.Build;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Button;
-
 import java.util.ArrayList;
 
 
@@ -42,15 +34,6 @@ public class ContactFragment extends Fragment {
         final MySOSDB db = new MySOSDB(this.getActivity());
         currentDB = db;
         updateContact(db,rootView);
-
-//        ImageButton addContact = (ImageButton) rootView.findViewById(R.id.addEmergency);
-//        addContact.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(),AddContact.class);
-//                startActivity(intent);
-//            }
-//        });
 
         ImageButton deleteButton1 = (ImageButton) rootView.findViewById(R.id.delete1);
         deleteButton1.setOnClickListener(new View.OnClickListener() {
@@ -118,14 +101,6 @@ public class ContactFragment extends Fragment {
             }
         }
     }
-
-//    public void updateContactFragment(){
-//        FragmentTransaction ft = getFragmentManager().beginTransaction();
-//        if (Build.VERSION.SDK_INT >= 26) {
-//            ft.setReorderingAllowed(false);
-//        }
-//        ft.detach(ContactFragment.this).attach(ContactFragment.this).commit();
-//    }
 
 
     @Override

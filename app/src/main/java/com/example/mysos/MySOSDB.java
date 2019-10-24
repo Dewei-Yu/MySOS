@@ -7,8 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 
 public class MySOSDB extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
@@ -93,8 +92,6 @@ public class MySOSDB extends SQLiteOpenHelper {
     }
 
 
-
-
     // update user details
     boolean insertUser(String name, String phone){
         if(getNumOfRows(USER_DETAIL) < MAXUSER) {
@@ -146,7 +143,6 @@ public class MySOSDB extends SQLiteOpenHelper {
     void deleteRow(int n){
         SQLiteDatabase db = this.getWritableDatabase();
         if(nthRow(n) != null)
-//            System.out.println(nthRow(n));
             db.delete(CONTACT_TABLE,COLUMN_NAME + "=?",new String[]{nthRow(n)});
     }
     
