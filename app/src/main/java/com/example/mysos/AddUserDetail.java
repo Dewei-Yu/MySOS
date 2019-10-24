@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class AddUserDetail extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,18 +23,32 @@ public class AddUserDetail extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteUser(1);
                 String nameInput = editName.getText().toString();
                 String phoneInput = editPhone.getText().toString();
-                boolean isInserted = db.insertUser(nameInput,phoneInput);
-                if (isInserted){
-                    showMessage("User detail is updated!");
-                }else{
-                    showMessage("Update fails");
+                boolean isInserted;
+                if(isValidPhone(phoneInput)) {
+                    db.deleteUser(1);
+                    isInserted = db.insertUser(nameInput, phoneInput);
+                    if (isInserted){
+                        showMessage("Insertion is successful!");
+                    }else{
+                        showMessage("Fails!");
+                    }
+                    onBackPressed();
+                }else {
+                    showMessage("Wrong Input! Please enter a valid phone number!");
                 }
-                onBackPressed();
             }
         });
+
+    }
+
+    private boolean isValidPhone(String phone){
+
+
+        Pattern p = Pattern.compile("[0-9]{10}");
+        Matcher m = p.matcher(phone);
+        return (m.find() && m.group().equals(phone));
 
     }
 

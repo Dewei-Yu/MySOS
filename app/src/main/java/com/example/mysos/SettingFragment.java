@@ -43,7 +43,7 @@ public class SettingFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                db.deleteUser(1);
+//                db.deleteUser(1);
                 Intent intent = new Intent(getActivity(),AddUserDetail.class);
                 startActivity(intent);
 

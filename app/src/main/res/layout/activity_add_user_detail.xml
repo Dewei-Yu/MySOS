@@ -43,7 +43,7 @@
         <EditText
             android:id="@+id/addUserName"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:ems="10"
             android:hint="Please Enter Your Name"
             android:layout_marginTop="20dp"
@@ -53,7 +53,7 @@
         <EditText
             android:id="@+id/addUserPhone"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="80dp"
             android:ems="10"
             android:hint="Please Enter Phone Number"
             android:inputType="textPersonName"

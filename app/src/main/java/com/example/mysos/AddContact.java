@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.Button;
 import android.widget.Toast;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class AddContact extends FragmentActivity {
 
@@ -37,15 +40,30 @@ public class AddContact extends FragmentActivity {
 
                 String nameInput = editName.getText().toString();
                 String phoneInput = editPhone.getText().toString();
-                boolean isInserted = db.insertData(nameInput,phoneInput);
-                if (isInserted){
-                    showMessage("Insertion is successful!");
-                }else{
-                    showMessage("Fails!");
+                boolean isInserted;
+                if(isValidPhone(phoneInput)) {
+                    isInserted = db.insertData(nameInput, phoneInput);
+                    if (isInserted){
+                        showMessage("Insertion is successful!");
+                    }else{
+                        showMessage("Fails!");
+                    }
+                    onBackPressed();
+                }else {
+                    showMessage("Wrong Input! Please enter a valid phone number!");
                 }
-                onBackPressed();
+
             }
         });
+
+    }
+
+    private boolean isValidPhone(String phone){
+
+
+        Pattern p = Pattern.compile("[0-9]{10}");
+        Matcher m = p.matcher(phone);
+        return (m.find() && m.group().equals(phone));
 
     }
 

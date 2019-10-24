@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -38,10 +39,16 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+
+import java.time.*;
+
 
 import static android.app.Activity.RESULT_OK;
 
@@ -215,6 +222,8 @@ public class HomeFragment extends Fragment {
                 String msm = "Emergency, " + myName + " is at " + location;
                 sms.sendTextMessage(number, null, msm, pi, null);
             }
+            MySOSDB historyDB = new MySOSDB(this.getActivity());
+            updateHistory(historyDB);
             Toast.makeText(getContext(), "Messages are sent!", Toast.LENGTH_LONG).show();
         }
     }
@@ -237,5 +246,21 @@ public class HomeFragment extends Fragment {
 //            videoView.setVideoURI(videoUri);
 //            videoView.start();
         }
+    }
+
+    private void updateHistory(MySOSDB db){
+        Cursor allContact = db.getAllContact();
+        if(allContact.getCount() != 0){
+            while(allContact.moveToNext()){
+                Date dateTime =java.util.Calendar.getInstance().getTime();
+                String location = getLocation();
+                String name = allContact.getString(0);
+                String phoneNumber = allContact.getString(1);
+                String record = "Location: "+ location + "\n"+ "Sent to: "+
+                        name + " (" + phoneNumber+") " + "\n" +"Time: "+dateTime;
+                db.insertHistory(record);
+            }
+        }
+
     }
 }
