@@ -196,17 +196,6 @@ public class HomeFragment extends Fragment {
                     smsManager.sendTextMessage(number, null,message, pi, null);
                     smsManager.sendTextMessage(number, null,getLocationURI(), pi, null);
                 }
-                Toast.makeText(getContext(), "A message has been sent!", Toast.LENGTH_LONG).show();
-                Toast.makeText(getContext(), "Message sent! 10 seconds audio recording starts!", Toast.LENGTH_LONG).show();
-
-
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
                 MySOSDB historyDB = new MySOSDB(this.getActivity());
                 updateHistory(historyDB);
 
