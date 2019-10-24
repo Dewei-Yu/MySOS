@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
     private StorageReference audioStorageRef;
     private String link =null;
     private String pathSave = null;
+    private ImageButton sosButton;
 
     public HomeFragment() {
     }
@@ -62,7 +63,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         fragmentView = view;
-        ImageButton sosButton =  view.findViewById(R.id.sosButton);
+        sosButton = view.findViewById(R.id.sosButton);
         Button videoRecordButton =  view.findViewById(R.id.videoRecordButton);
         sosButton.setOnClickListener(new ButtonListener());
         videoRecordButton.setOnClickListener(new ButtonListener());
@@ -77,13 +78,14 @@ public class HomeFragment extends Fragment {
     private class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+
             switch (view.getId()) {
                 case R.id.sosButton:
-                    sendSMS("", "message");
-                    recordAudio();
-                    File audiofile = new File(pathSave);
-                    Uri audioUri = Uri.fromFile(audiofile);
-                    UploadAudio(audioUri);
+                     sosButton.setImageResource(R.drawable.record);
+                     Toast.makeText(getActivity(), "You have 10 seconds to record audio", Toast.LENGTH_LONG);
+//                    sosButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.home));
+                     new SMSThread().start();
+//                    sosButton.setImageResource(R.drawable.sos);
                     break;
                 case R.id.videoRecordButton:
                     dispatchTakeVideoIntent();
@@ -248,6 +250,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void recordAudio(){
+
         pathSave = getPath(System.currentTimeMillis()+ "audio.3gp");
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -321,4 +324,14 @@ public class HomeFragment extends Fragment {
         return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
     }
 
+    private class SMSThread extends Thread{
+        @Override
+        public void run() {
+            sendSMS("", "message");
+            recordAudio();
+            File audiofile = new File(pathSave);
+            Uri audioUri = Uri.fromFile(audiofile);
+            UploadAudio(audioUri);
+        }
+    }
 }
