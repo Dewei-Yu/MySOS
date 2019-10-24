@@ -53,6 +53,8 @@ public class HomeFragment extends Fragment {
     private String link =null;
     private String pathSave = null;
     private ImageButton sosButton;
+    private static final String USER_DETAIL = "user";
+    private static final String CONTACT_TABLE = "contact";
 
     public HomeFragment() {
     }
@@ -78,19 +80,24 @@ public class HomeFragment extends Fragment {
     private class ButtonListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-
-            switch (view.getId()) {
-                case R.id.sosButton:
-                     sosButton.setImageResource(R.drawable.record);
-                     Toast.makeText(getActivity(), "You have 10 seconds to record audio", Toast.LENGTH_LONG);
-//                    sosButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.home));
-                     new SMSThread().start();
-//                    sosButton.setImageResource(R.drawable.sos);
-                    break;
-                case R.id.videoRecordButton:
-                    dispatchTakeVideoIntent();
-                    Toast.makeText(getActivity(), "Click vidoe button", Toast.LENGTH_LONG).show();
-                    break;
+            MySOSDB db = new MySOSDB(getActivity());
+            if(db.getNumOfRows(USER_DETAIL) >0 && db.getNumOfRows(CONTACT_TABLE) > 0) {
+                switch (view.getId()) {
+                    case R.id.sosButton:
+                        checkPermissions();
+                        sendSMS("", "message");
+                        sosButton.setImageResource(R.drawable.record);
+                        Toast.makeText(getActivity(), "You have 10 seconds to record audio", Toast.LENGTH_LONG).show();
+                        new SMSThread().start();
+                        break;
+                    case R.id.videoRecordButton:
+                        checkPermissions();
+                        dispatchTakeVideoIntent();
+                        Toast.makeText(getActivity(), "Click vidoe button", Toast.LENGTH_LONG).show();
+                        break;
+                }
+            }else {
+                Toast.makeText(getActivity(), "Please add contact and your information first!", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -327,11 +334,17 @@ public class HomeFragment extends Fragment {
     private class SMSThread extends Thread{
         @Override
         public void run() {
-            sendSMS("", "message");
+
             recordAudio();
             File audiofile = new File(pathSave);
             Uri audioUri = Uri.fromFile(audiofile);
             UploadAudio(audioUri);
+            sosButton.post(new Runnable() {
+                @Override
+                public void run() {
+                    sosButton.setImageResource(R.drawable.sos);
+                }
+            });
         }
     }
 }

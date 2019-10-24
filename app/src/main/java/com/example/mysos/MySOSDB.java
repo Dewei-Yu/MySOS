@@ -133,7 +133,7 @@ public class MySOSDB extends SQLiteOpenHelper {
 
 
     // get number of rows in a table
-    private long getNumOfRows(String tableName) {
+    long getNumOfRows(String tableName) {
         SQLiteDatabase db = this.getReadableDatabase();
         long count = DatabaseUtils.queryNumEntries(db, tableName);
         return count;
