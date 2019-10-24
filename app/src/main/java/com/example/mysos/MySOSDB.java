@@ -146,6 +146,7 @@ public class MySOSDB extends SQLiteOpenHelper {
     void deleteRow(int n){
         SQLiteDatabase db = this.getWritableDatabase();
         if(nthRow(n) != null)
+            System.out.println(nthRow(n));
             db.delete(CONTACT_TABLE,COLUMN_NAME + "=?",new String[]{nthRow(n)});
     }
     
@@ -157,13 +158,15 @@ public class MySOSDB extends SQLiteOpenHelper {
     }
 
     // find the nth row string
-    private String nthRow(int n){
+    String nthRow(int n){
         Cursor allData = getAllContact();
         if(allData.getCount() != 0){
             int i=0;
             String nthRowString = null;
             while(i<n && allData.moveToNext()){
-                nthRowString = allData.getString(0);
+                if (i==n-1) {
+                    nthRowString = allData.getString(0);
+                }
                 i++;
             }
             return nthRowString;

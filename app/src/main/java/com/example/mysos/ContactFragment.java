@@ -119,13 +119,13 @@ public class ContactFragment extends Fragment {
         }
     }
 
-    public void updateContactFragment(){
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        if (Build.VERSION.SDK_INT >= 26) {
-            ft.setReorderingAllowed(false);
-        }
-        ft.detach(ContactFragment.this).attach(ContactFragment.this).commit();
-    }
+//    public void updateContactFragment(){
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        if (Build.VERSION.SDK_INT >= 26) {
+//            ft.setReorderingAllowed(false);
+//        }
+//        ft.detach(ContactFragment.this).attach(ContactFragment.this).commit();
+//    }
 
 
     @Override
