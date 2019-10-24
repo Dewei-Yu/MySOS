@@ -146,7 +146,7 @@ public class MySOSDB extends SQLiteOpenHelper {
     void deleteRow(int n){
         SQLiteDatabase db = this.getWritableDatabase();
         if(nthRow(n) != null)
-            System.out.println(nthRow(n));
+//            System.out.println(nthRow(n));
             db.delete(CONTACT_TABLE,COLUMN_NAME + "=?",new String[]{nthRow(n)});
     }
     
