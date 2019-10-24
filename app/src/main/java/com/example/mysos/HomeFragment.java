@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
                         checkPermissions();
                         sendSMS("", "message");
                         sosButton.setImageResource(R.drawable.record);
-                        Toast.makeText(getActivity(), "You have 10 seconds to record audio", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "You have 20 seconds to record audio", Toast.LENGTH_LONG).show();
                         new SMSThread().start();
                         break;
                     case R.id.videoRecordButton:
@@ -271,7 +271,7 @@ public class HomeFragment extends Fragment {
         }
         mediaRecorder.start();
         try {
-            TimeUnit.SECONDS.sleep(10);
+            TimeUnit.SECONDS.sleep(20);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
