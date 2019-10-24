@@ -75,6 +75,7 @@ public class HomeFragment extends Fragment {
 
     private StorageReference mStorageRef;
     private String link =null;
+    private String pathSave = null;
 
 
     public HomeFragment() {
@@ -244,7 +245,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void recordAudio(){
-        String pathSave = getPath(System.currentTimeMillis()+ "audio.3gp");
+        pathSave = getPath(System.currentTimeMillis()+ "audio.3gp");
 
         mediaRecorder = new MediaRecorder();
 
@@ -290,6 +291,7 @@ public class HomeFragment extends Fragment {
                         while (!urlTask.isSuccessful());
                         Uri downloadUrl = urlTask.getResult();
                         link = downloadUrl.toString();
+
                         sendSMS(link);
                     }
                 })
