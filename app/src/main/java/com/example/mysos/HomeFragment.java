@@ -3,6 +3,7 @@ package com.example.mysos;
 
 import android.Manifest;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import android.media.MediaRecorder;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -29,10 +31,18 @@ import android.telephony.SmsMessage;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.VideoView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -63,6 +73,9 @@ public class HomeFragment extends Fragment {
 
     MediaRecorder mediaRecorder = null;
 
+    private StorageReference mStorageRef;
+    private String link =null;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -80,7 +93,7 @@ public class HomeFragment extends Fragment {
 
         sosButton.setOnClickListener(new ButtonListener());
         videoRecordButton.setOnClickListener(new ButtonListener());
-
+        mStorageRef = FirebaseStorage.getInstance().getReference("Videos");
         checkPermissions();
 
         // Inflate the layout for this fragment
@@ -94,19 +107,17 @@ public class HomeFragment extends Fragment {
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.sosButton:
-
-                    sendSMS();
+                    sendSMS("sent!");
                     Toast.makeText(getActivity(), "Message sent! 20 seconds audio recording starts!", Toast.LENGTH_LONG).show();
                     recordAudio();
-
                     break;
                 case R.id.videoRecordButton:
 
                     dispatchTakeVideoIntent();
-
                     Toast.makeText(getActivity(), "Click vidoe button", Toast.LENGTH_LONG).show();
                     break;
             }
+
         }
     }
 
@@ -155,7 +166,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void sendSMS() {
+    private void sendSMS(String msm) {
         String location = getLocation();
         if (location.equals("Permission denied")) {
             Toast.makeText(getContext(), "Please repress and permit GPS access", Toast.LENGTH_LONG).show();
@@ -167,7 +178,7 @@ public class HomeFragment extends Fragment {
             for (String number : contactList) {
                 SmsManager sms = SmsManager.getDefault();
                 PendingIntent pi = PendingIntent.getBroadcast(getActivity(), 0, new Intent(), 0);
-                String msm = "Emergency, " + myName + " is at " + location;
+//                String msm = "Emergency, " + myName + " is at " + location;
                 sms.sendTextMessage(number, null, msm, pi, null);
             }
             MySOSDB historyDB = new MySOSDB(this.getActivity());
@@ -188,6 +199,8 @@ public class HomeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, intent);
         if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == RESULT_OK) {
             Uri videoUri = intent.getData(); //wait for send
+
+            UploadVideo(videoUri);
 
             //display the video recorded
 //            VideoView videoView = (VideoView) fragmentView.findViewById(R.id.videoView);
@@ -259,6 +272,40 @@ public class HomeFragment extends Fragment {
         //stop
         mediaRecorder.stop();
 
+    }
+
+
+    private void UploadVideo(Uri videoUri) {
+        // given file a name
+        System.out.println("1111111111111111111111111");
+        StorageReference Ref = mStorageRef.child(System.currentTimeMillis() + "." + getExtension(videoUri));
+
+        Ref.putFile(videoUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        Toast.makeText(getActivity(), "Video Uploaded Successfully!", Toast.LENGTH_LONG).show();
+                        // Get a URL to the uploaded content
+                        Task<Uri> urlTask = taskSnapshot.getStorage().getDownloadUrl();
+                        while (!urlTask.isSuccessful());
+                        Uri downloadUrl = urlTask.getResult();
+                        link = downloadUrl.toString();
+                        sendSMS(link);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle unsuccessful uploads
+                        // ...
+                    }
+                });
+    }
+
+    private String getExtension(Uri uri) {
+        ContentResolver cr = getActivity().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
     }
 
 }

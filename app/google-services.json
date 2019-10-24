@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "1080852636041",
+    "firebase_url": "https://mysos-ee317.firebaseio.com",
+    "project_id": "mysos-ee317",
+    "storage_bucket": "mysos-ee317.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080852636041:android:3bf672dfe466244c9c0158",
+        "android_client_info": {
+          "package_name": "com.example.mysos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080852636041-dn2shsip6ei8uc6krkn6l6491kuv641u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mysos",
+            "certificate_hash": "48ec2bd0bc71c3585e3851761f0af9c84e56337a"
+          }
+        },
+        {
+          "client_id": "1080852636041-bs2f3jfp06hg17mjdr8mgoj6p3128fj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mysos",
+            "certificate_hash": "0009f0200b5fdf9c1246bc1a9960f99c304795db"
+          }
+        },
+        {
+          "client_id": "1080852636041-duu0ergi2g5vol1ii8lj3h3s9pa6bkgd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYF7_UkT6UVW835sCZhyw0JKN4nXuLPm0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080852636041-duu0ergi2g5vol1ii8lj3h3s9pa6bkgd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
